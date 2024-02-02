@@ -24,8 +24,6 @@ export default function Home() {
       fileType = file.type
     }
 
-    console.log(fileType)
-
     const response = await api.post('/upload', {
       data: title,
       contentType: 'image/png'
@@ -39,13 +37,11 @@ export default function Home() {
 
     const responseUrl = await api.get(`/upload/${response.data.fileId}`)
 
-    //console.log(responseUrl.data.data.map((e: any) => e.original_url)[0])
-
     await api.post('/news', {
       title,
       content,
       imgUrl: responseUrl.data.data.map((e: any) => e.original_url)[0]
-    }).then(() => console.log('Salvou'))
+    })
 
   }
 
