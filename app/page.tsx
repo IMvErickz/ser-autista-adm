@@ -13,7 +13,7 @@ import { Toast } from "@/components/Toast/Toast";
 const newsSchema = z.object({
   title: z.string(),
   content: z.string(),
-  file: z.instanceof(FileList)
+  file: z.any()
 })
 
 type newsSchemaForm = z.infer<typeof newsSchema>
