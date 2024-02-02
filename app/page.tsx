@@ -48,12 +48,12 @@ export default function Home() {
   return (
     <>
       <header className="w-full flex items-center justify-center pt-20">
-        <h1 className="font-bold text-blue-450 text-4xl">Administração Ser Autista</h1>
+        <h1 className="font-bold text-blue-450 sm:text-4xl text-2xl">Administração Ser Autista</h1>
       </header>
       <section className="w-[62.5rem] flex flex-col items-center justify-center py-20">
         <h2 className="font-bold text-blue-450 text-2xl">Nova publicação</h2>
 
-        <form onSubmit={handleCreateNews} className="flex flex-col w-full items-center justify-center gap-y-4">
+        <form onSubmit={handleCreateNews} className="flex flex-col w-[300px] sm:w-full items-center justify-center gap-y-4">
           <label htmlFor="file" className="bg-blue-450 text-white rounded py-2 px-4 hover:bg-blue-450/80 transition-colors">Escolher imagem</label>
           <MediaPicker />
           <input name="title" type="text" placeholder="Título da publicação" className="border-2 border-solid border-black p-2 w-full rounded" />
