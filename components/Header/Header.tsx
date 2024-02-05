@@ -9,7 +9,7 @@ export function Header() {
             <nav className="flex flex-row gap-x-16 pr-12">
                 <Link href="/" className="text-blue-450 text-sm font-bold leading-4">Publicações</Link>
                 <Link href="/professional/create" className="text-blue-450 text-sm font-bold leading-4">Profissionais</Link>
-                <a href="" className="text-blue-450 text-sm font-bold leading-4">Dúvidas</a>
+                <Link href="/doubt" className="text-blue-450 text-sm font-bold leading-4">Dúvidas</Link>
             </nav>
         </header>
     )

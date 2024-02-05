@@ -110,7 +110,8 @@ export default function Home() {
           <textarea {...register('content')} id="" cols={30} rows={10} className="border-2 border-solid border-black p-2 w-full rounded" placeholder="Conteúdo" />
           <button
             type="submit"
-            className="bg-blue-450 text-white rounded py-2 px-4 hover:bg-blue-450/80 transition-colors"
+            className="bg-blue-450 text-white rounded py-2 px-4 hover:bg-blue-450/80 transition-colors disabled:cursor-not-allowed"
+            disabled={isSubmitting}
           >
             {isSubmitting ? 'Carregando' : 'Publicar'}
           </button>
