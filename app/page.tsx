@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Toast } from "@/components/Toast/Toast";
+import Link from "next/link";
 
 const newsSchema = z.object({
   title: z.string(),
@@ -82,8 +83,17 @@ export default function Home() {
 
   return (
     <>
-      <header className="w-full flex items-center justify-center pt-20">
+      <header className="w-full flex flex-col items-center justify-center pt-20">
         <h1 className="font-bold text-blue-450 sm:text-4xl text-2xl">Administração Ser Autista</h1>
+        <div className="w-full flex items-center justify-between px-40 pt-10">
+          <Link href={'/publish/update'} className="text-blue-450 font-semibold hover:underline">
+            Alterar publicação
+          </Link>
+
+          <Link href={'/publish/delete'} className="text-blue-450 font-semibold hover:underline">
+            Deletar publicação
+          </Link>
+        </div>
       </header>
       <section className="w-[62.5rem] flex flex-col items-center justify-center py-20">
         <h2 className="font-bold text-blue-450 text-2xl">Nova publicação</h2>
