@@ -1,0 +1,68 @@
+'use client'
+
+import { api } from "@/lib/axios"
+import { useEffect, useState } from "react"
+import { DoubtModal } from "../Modal/DoubtModal"
+
+
+interface DoubtProps {
+    id: string
+    question: string
+    author: string
+}
+
+export function DoubtTable() {
+
+    const [data, setData] = useState<DoubtProps[]>([])
+
+    async function getDoubt() {
+        const res = await api.get('/doubt')
+        setData(res.data.doubt)
+    }
+
+    useEffect(() => {
+        getDoubt()
+    }, [])
+
+
+    return (
+        <div className="w-full relative overflow-x-auto">
+            <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Autor
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Pergunta
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Ação
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map(doubt => {
+                            return (
+                                <tr key={doubt.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {doubt.author}
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        {doubt.question}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <DoubtModal title={doubt.question} id={doubt.id} />
+                                    </td>
+                                </tr>
+                            )
+                        })}
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    )
+}

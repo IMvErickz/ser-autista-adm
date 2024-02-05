@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <main className="flex flex-row items-start justify-center gap-x-36 bg-white">
-          <section>
+          <section className="w-full flex flex-col items-center justify-center">
             {children}
           </section>
         </main>
