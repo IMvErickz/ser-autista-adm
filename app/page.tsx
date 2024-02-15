@@ -64,10 +64,10 @@ export default function Home() {
 
       const responseUrl = await api.get(`/upload/${response.data.fileId}`)
 
-      await api.post('/news', {
+      await axios.post('/api/publish', {
         title,
         content,
-        imgUrl: responseUrl.data.data.map((e: any) => e.original_url)[0]
+        imgUrl: 'responseUrl.data.data.map((e: any) => e.original_url)[0]'
       })
       setSubmit(true)
       setMessage('Cadastrado com sucesso')
