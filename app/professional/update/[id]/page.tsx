@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
-import Link from "next/link"
 import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -19,7 +18,7 @@ const registerProfessionalSchema = z.object({
 
 type registerProfessionalData = z.infer<typeof registerProfessionalSchema>
 
-export default function CreateProfessional() {
+export default function UpdateProfessional({ params }: { params: { id: string } }) {
     const [preview, setPreview] = useState<string | null>(null)
     const { register, handleSubmit, formState: { isSubmitting, errors } } = useForm<registerProfessionalData>({
         resolver: zodResolver(registerProfessionalSchema)
@@ -58,7 +57,7 @@ export default function CreateProfessional() {
             const responseUrl = await axios.get(`/api/upload/${response.data.fileId}`)
 
             if (!address) {
-                await axios.post('/api/professional', {
+                await axios.put(`/api/professional/${params.id}`, {
                     name,
                     number,
                     email,
@@ -67,7 +66,7 @@ export default function CreateProfessional() {
                     description
                 })
             } else if (!email) {
-                await axios.post('/api/professional', {
+                await axios.put(`/api/professional/${params.id}`, {
                     name,
                     number,
                     address,
@@ -76,7 +75,7 @@ export default function CreateProfessional() {
                     description
                 })
             } else {
-                await axios.post('/api/professional', {
+                await axios.put(`/api/professional/${params.id}`, {
                     name,
                     number,
                     address,
@@ -96,14 +95,11 @@ export default function CreateProfessional() {
         <section className="w-full h-full flex flex-col items-center justify-center py-10 gap-y-8">
             <header className="w-full flex items-center justify-center pt-10">
                 <h1 className="text-blue-450 font-bold text-4xl">
-                    Cadastrar Profissional
+                    Atualizar Profissional
                 </h1>
             </header>
 
             <div className="w-full flex flex-col items-center justify-center px-40">
-                <Link href='/professional/update' className="hover:underline">
-                    Atualizar Professional
-                </Link>
                 <form onSubmit={handleSubmit(handleRegisterProfessional)} className="flex flex-col w-[300px] sm:w-full items-center justify-center gap-y-4 px-10 py-10">
                     <input {...register('name')} type="text" placeholder="Nome" className="border-2 border-solid border-black p-2 w-full rounded" />
                     <label htmlFor="file" className="bg-blue-450 text-white rounded py-2 px-4 hover:bg-blue-450/80 transition-colors">Escolher imagem</label>
