@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEXT_PUBLIC_DATABASE_URL")
+}
+
+model Answer {
+  id      String @id
+  author  String
+  content String
+  doubtId String
+  Doubt   Doubt  @relation(fields: [doubtId], references: [id], onDelete: Cascade)
+}
+
+model Comments {
+  id        String   @id
+  author    String
+  content   String
+  createdAt DateTime @default(now())
+  newsId    String?
+  News      News?    @relation(fields: [newsId], references: [id], onDelete: Cascade)
+}
+
+model Doubt {
+  id        String   @id
+  question  String
+  author    String
+  createdAt DateTime @default(now())
+  Answer    Answer[]
+}
+
+model Images {
+  id   String @id
+  key  String
+  News News[]
+}
+
+model News {
+  id        String     @id
+  title     String
+  content   String
+  createdAt DateTime?
+  imgUrl    String
+  updateAt  DateTime?
+  imagesId  String?
+  Comments  Comments[]
+  Images    Images?    @relation(fields: [imagesId], references: [id], onDelete: Cascade)
+}
+
+model Professional {
+  id       String  @id
+  name     String
+  number   String?
+  address  String?
+  email    String?
+  imageUrl String
+}
