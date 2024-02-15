@@ -1,6 +1,5 @@
 'use client'
 
-import { api } from "@/lib/axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { ChangeEvent, useState } from "react"
@@ -12,7 +11,9 @@ const registerProfessionalSchema = z.object({
     number: z.string(),
     email: z.string().email().optional(),
     address: z.string().optional(),
-    file: z.any()
+    file: z.any(),
+    specialty: z.string(),
+    description: z.string()
 })
 
 type registerProfessionalData = z.infer<typeof registerProfessionalSchema>
@@ -36,12 +37,12 @@ export default function CreateProfessional() {
     }
 
     async function handleRegisterProfessional(data: registerProfessionalData) {
-        const { name, number, address, email, file } = data
+        const { name, number, address, email, file, specialty, description } = data
 
         const fileParse = file[0]
 
         try {
-            const response = await api.post('/upload', {
+            const response = await axios.post('/api/upload', {
                 data: name,
                 contentType: file[0].type
             })
@@ -53,29 +54,35 @@ export default function CreateProfessional() {
                 }
             })
 
-            const responseUrl = await api.get(`/upload/${response.data.fileId}`)
+            const responseUrl = await axios.get(`/api/upload/${response.data.fileId}`)
 
             if (!address) {
-                await api.post('/professional', {
+                await axios.post('/api/professional', {
                     name,
                     number,
                     email,
-                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0]
+                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0],
+                    specialty,
+                    description
                 })
             } else if (!email) {
-                await api.post('/professional', {
+                await axios.post('/api/professional', {
                     name,
                     number,
                     address,
-                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0]
+                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0],
+                    specialty,
+                    description
                 })
             } else {
-                await api.post('/professional', {
+                await axios.post('/api/professional', {
                     name,
                     number,
                     address,
                     email,
-                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0]
+                    imageUrl: responseUrl.data.data.map((e: any) => e.original_url)[0],
+                    specialty,
+                    description
                 })
             }
 
@@ -104,6 +111,8 @@ export default function CreateProfessional() {
                     <input {...register('number')} type="text" placeholder="Número" className="border-2 border-solid border-black p-2 w-full rounded" />
                     <input {...register('email')} type="text" placeholder="email (opcional)" className="border-2 border-solid border-black p-2 w-full rounded" required={false} />
                     <input {...register('address')} type="text" placeholder="Endereço (opcional)" className="border-2 border-solid border-black p-2 w-full rounded" />
+                    <input {...register('specialty')} type="text" placeholder="Especialidade" className="border-2 border-solid border-black p-2 w-full rounded" />
+                    <input {...register('description')} type="text" placeholder="Descrição" className="border-2 border-solid border-black p-2 w-full rounded" />
                     <button
                         type="submit"
                         className="bg-blue-450 text-white rounded py-2 px-4 hover:bg-blue-450/80 transition-colors"
