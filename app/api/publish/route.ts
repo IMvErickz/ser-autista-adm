@@ -19,6 +19,7 @@ export async function POST(req: Request) {
             title,
             imgUrl,
             content,
+            createdAt: new Date()
         }
     })
 
