@@ -1,6 +1,6 @@
 'use client'
 
-import axios from "axios"
+import { api } from "@/lib/axios"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -19,7 +19,7 @@ export function TableProfessional() {
     const [data, setData] = useState<ProfessionalProps[]>([])
 
     async function getProfessional() {
-        const response = await axios.get('/api/professional')
+        const response = await api.get('/professional')
         setData(response.data.professional)
 
     }

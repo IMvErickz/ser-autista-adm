@@ -50,12 +50,10 @@ export default function Home() {
     const fileParse = file[0]
 
     try {
-      const response = await axios.post('/api/upload', {
+      const response = await api.post('/upload', {
         data: title,
         contentType: file[0].type
       })
-
-      console.log(response)
 
 
       await axios.put(response.data.signedUrl, fileParse, {
@@ -64,9 +62,9 @@ export default function Home() {
         }
       })
 
-      const responseUrl = await axios.get(`/api/upload/${response.data.fileId}`)
+      const responseUrl = await api.get(`/upload/${response.data.fileId}`)
 
-      await axios.post('/api/publish', {
+      await api.post('/news', {
         title,
         content,
         imgUrl: responseUrl.data.data.map((e: any) => e.original_url)[0],

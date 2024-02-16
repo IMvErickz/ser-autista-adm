@@ -1,5 +1,6 @@
 'use client'
 
+import { api } from "@/lib/axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { ChangeEvent, useState } from "react"
@@ -42,7 +43,7 @@ export default function UpdateProfessional({ params }: { params: { id: string } 
         const fileParse = file[0]
 
         try {
-            const response = await axios.post('/api/upload', {
+            const response = await api.post('/upload', {
                 data: name,
                 contentType: file[0].type
             })
@@ -54,10 +55,10 @@ export default function UpdateProfessional({ params }: { params: { id: string } 
                 }
             })
 
-            const responseUrl = await axios.get(`/api/upload/${response.data.fileId}`)
+            const responseUrl = await api.get(`/upload/${response.data.fileId}`)
 
             if (!address) {
-                await axios.put(`/api/professional/${params.id}`, {
+                await api.put(`/professional/${params.id}`, {
                     name,
                     number,
                     email,
@@ -66,7 +67,7 @@ export default function UpdateProfessional({ params }: { params: { id: string } 
                     description
                 })
             } else if (!email) {
-                await axios.put(`/api/professional/${params.id}`, {
+                await api.put(`/professional/${params.id}`, {
                     name,
                     number,
                     address,
@@ -75,7 +76,7 @@ export default function UpdateProfessional({ params }: { params: { id: string } 
                     description
                 })
             } else {
-                await axios.put(`/api/professional/${params.id}`, {
+                await api.put(`/professional/${params.id}`, {
                     name,
                     number,
                     address,

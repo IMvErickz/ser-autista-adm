@@ -1,5 +1,6 @@
 'use client'
 
+import { api } from "@/lib/axios"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import Link from "next/link"
@@ -43,7 +44,7 @@ export default function CreateProfessional() {
         const fileParse = file[0]
 
         try {
-            const response = await axios.post('/api/upload', {
+            const response = await api.post('/upload', {
                 data: name,
                 contentType: file[0].type
             })
@@ -55,10 +56,10 @@ export default function CreateProfessional() {
                 }
             })
 
-            const responseUrl = await axios.get(`/api/upload/${response.data.fileId}`)
+            const responseUrl = await api.get(`/upload/${response.data.fileId}`)
 
             if (!address) {
-                await axios.post('/api/professional', {
+                await api.post('/professional', {
                     name,
                     number,
                     email,
@@ -67,7 +68,7 @@ export default function CreateProfessional() {
                     description
                 })
             } else if (!email) {
-                await axios.post('/api/professional', {
+                await api.post('/professional', {
                     name,
                     number,
                     address,
@@ -76,7 +77,7 @@ export default function CreateProfessional() {
                     description
                 })
             } else {
-                await axios.post('/api/professional', {
+                await api.post('/professional', {
                     name,
                     number,
                     address,
@@ -102,7 +103,7 @@ export default function CreateProfessional() {
 
             <div className="w-full flex flex-col items-center justify-center px-40">
                 <Link href='/professional/update' className="hover:underline">
-                    Atualizar Professional
+                    Atualizar Profissional
                 </Link>
                 <form onSubmit={handleSubmit(handleRegisterProfessional)} className="flex flex-col w-[300px] sm:w-full items-center justify-center gap-y-4 px-10 py-10">
                     <input {...register('name')} type="text" placeholder="Nome" className="border-2 border-solid border-black p-2 w-full rounded" />
