@@ -51,10 +51,12 @@ model News {
 }
 
 model Professional {
-  id       String  @id
-  name     String
-  number   String?
-  address  String?
-  email    String?
-  imageUrl String
+  id          String  @id
+  name        String
+  number      String?
+  address     String?
+  email       String?
+  imageUrl    String
+  specialty   String
+  description String
 }

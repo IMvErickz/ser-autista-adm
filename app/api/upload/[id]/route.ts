@@ -23,7 +23,5 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
     const response = await imgbox(signedUrlDownload)
 
-    console.log("res:", response)
-
     return NextResponse.json(response)
 }
