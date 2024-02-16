@@ -103,7 +103,7 @@ export default function CreateProfessional() {
 
             <div className="w-full flex flex-col items-center justify-center px-40">
                 <Link href='/professional/update' className="hover:underline">
-                    Atualizar Professional
+                    Atualizar Profissional
                 </Link>
                 <form onSubmit={handleSubmit(handleRegisterProfessional)} className="flex flex-col w-[300px] sm:w-full items-center justify-center gap-y-4 px-10 py-10">
                     <input {...register('name')} type="text" placeholder="Nome" className="border-2 border-solid border-black p-2 w-full rounded" />
